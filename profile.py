@@ -1,42 +1,24 @@
 #!/usr/bin/env python
 
-kube_description= \
-"""
-Phobos Powder profile
-"""
-kube_instruction= \
-"""
-To be done
-"""
+kube_description= "Phobos Powder profile"
+kube_instruction= "To be done"
 
 #
 # Standard geni-lib/portal libraries
 #
 import geni.portal as portal
 import geni.rspec.pg as PG
-import geni.rspec.emulab as elab
 import geni.rspec.igext as IG
-import geni.urn as URN
 
 
-
-#
-# PhantomNet extensions.
-#
-import geni.rspec.emulab.pnext as PN
-
-
-#
-# This geni-lib script is designed to run in the PhantomNet Portal.
-#
 pc = portal.Context()
-
 rspec = PG.Request()
 
 
 # Profile parameters.
 pc.defineParameter("Hardware", "EPC hardware",
                    portal.ParameterType.STRING,"d430",[("d430","d430"),("d710","d710"), ("d820", "d820"), ("pc3000", "pc3000")])
+
 params = pc.bindParameters()
 
 #
@@ -47,8 +29,6 @@ pc.verifyParameters()
 
 
 
-
-
 tour = IG.Tour()
 tour.Description(IG.Tour.TEXT,kube_description)
 tour.Instructions(IG.Tour.MARKDOWN,kube_instruction)
@@ -56,7 +36,7 @@ rspec.addTour(tour)
 
 # Network
 netmask="255.255.255.0"
-epclink = rspec.Link("s1-lan")
+epclink = rspec.Link("Backhaul")
 
 # Core
 rspec = PG.Request()
