@@ -22,7 +22,19 @@ ninja -C build
 # Configure TUN device
 sudo ./misc/netconf.sh
 
+# Configure IP Tables (Only IPv4)
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
+
+
 # Configure the core
 cd ./install/etc/open5gs/
 cp /local/repository/config/open5gs/* .
 sed -i 's/mcc: 901/mcc: 208/g' mme.conf
+
+# Add Users
+for i in $(seq -f "%010g" 1 1500)
+do
+	echo "UE: 20893$i"
+	/local/repository/open5gs/misc/db/open5gs-dbctl add 20893$i 00001111222233334444555566667777 88889999AAAABBBBCCCCDDDDEEEEFFFF
+done
