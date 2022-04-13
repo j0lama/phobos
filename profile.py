@@ -33,6 +33,10 @@ pc = portal.Context()
 
 rspec = pc.makeRequestRSpec()
 
+
+# Profile parameters.
+pc.defineParameter("Hardware", "EPC hardware",
+                   portal.ParameterType.STRING,"d430",[("d430","d430"),("d710","d710"), ("d820", "d820"), ("pc3000", "pc3000")])
 params = pc.bindParameters()
 
 #
