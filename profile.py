@@ -39,7 +39,6 @@ netmask="255.255.255.0"
 epclink = rspec.Link("Backhaul")
 
 # Core
-rspec = PG.Request()
 epc = rspec.RawPC("epc")
 epc.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 #epc.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
@@ -52,7 +51,6 @@ epclink.addInterface(iface)
 
 
 # RAN
-rspec = PG.Request()
 ran = rspec.RawPC("ran")
 ran.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 #ran.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
