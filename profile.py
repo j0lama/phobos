@@ -31,7 +31,7 @@ import geni.rspec.emulab.pnext as PN
 #
 pc = portal.Context()
 
-
+rspec = pc.makeRequestRSpec()
 
 params = pc.bindParameters()
 
