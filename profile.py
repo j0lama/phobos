@@ -2,7 +2,7 @@
 
 kube_description= \
 """
-Phobos POwder profile
+Phobos Powder profile
 """
 kube_instruction= \
 """
@@ -31,7 +31,7 @@ import geni.rspec.emulab.pnext as PN
 #
 pc = portal.Context()
 
-rspec = pc.makeRequestRSpec()
+rspec = PG.Request()
 
 
 # Profile parameters.
@@ -70,17 +70,17 @@ iface.addAddress(PG.IPv4Address("192.168.4.80", netmask))
 epclink.addInterface(iface)
 
 
-  
-ran = rspec.XenVM('multiplexer')
-ran.cores = 2
-ran.ram = 1024 * 4
-ran.routable_control_ip = True
+
+# RAN
+rspec = PG.Request()
+ran = rspec.RawPC("ran")
 ran.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-ran.Site('Nervion')
+#ran.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
+ran.hardware_type = params.Hardware
+ran.Site('RAN')
 iface = ran.addInterface()
 iface.addAddress(PG.IPv4Address("192.168.4.81", netmask))
 epclink.addInterface(iface)
-#ran.addService(PG.Execute(shell="bash", command="/local/repository/scripts/multiplexer/run.sh"))
 
 
 
