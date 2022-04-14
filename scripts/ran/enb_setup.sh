@@ -17,13 +17,13 @@ sudo ./build_oai -I
 sudo ./build_oai --UE --eNB
 
 # eNB config
-IFACE=$(ip route list 192.168.4.81/24 | awk '{print $3}')
-sed -i "s/IFACE/$IFACE/g" /local/repository/config/ran/enb.conf
+# Backhaul
+BACKHAUL_IFACE=$(ip route list 192.168.1.2/24 | awk '{print $3}')
+sed -i "s/BACKHAUL_IFACE/$BACKHAUL_IFACE/g" /local/repository/config/ran/enb.conf
+
+# Fronthaul
+FRONTHAUL_IFACE=$(ip route list 192.168.2.1/24 | awk '{print $3}')
+sed -i "s/FRONTHAUL_IFACE/$FRONTHAUL_IFACE/g" /local/repository/config/ran/enb.conf
+
 
 # sudo -E ./ran_build/build/lte-softmodem -O /local/repository/config/ran/enb.conf --emulate-l1 --nsa --log_config.global_log_options level,nocolor,time,thread_id | tee eNB.log 2>&1
-
-# Configure UEs
-
-# Clone broker
-cd ../..
-git clone https://github.com/EpiSci/oai-lte-5g-multi-ue-proxy.git

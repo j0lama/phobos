@@ -39,7 +39,7 @@ mme:
           addr: 127.0.0.8
 
     s1ap:
-      - addr: 192.168.4.80
+      - addr: 192.168.1.1
     gtpc:
       - addr: 127.0.0.2
     gummei:
@@ -62,7 +62,7 @@ mme:
 
 sgwc:
     gtpc:
-      - addr: 192.168.4.80
+      - addr: 127.0.0.3
     pfcp:
       - addr: 127.0.0.3
 
@@ -139,7 +139,7 @@ sgwu:
     pfcp:
       - addr: 127.0.0.6
     gtpu:
-      - addr: 192.168.4.80
+      - addr: 192.168.1.1
 
 upf:
     pfcp:

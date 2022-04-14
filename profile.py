@@ -36,7 +36,17 @@ rspec.addTour(tour)
 
 # Network
 netmask="255.255.255.0"
-epclink = rspec.Link("Backhaul")
+# Backhaul network
+backhaul = rspec.Link("Backhaul")
+backhaul.link_multiplexing = True
+backhaul.vlan_tagging = True
+backhaul.best_effort = True
+
+# Fronthaul network
+fronthaul = rspec.Link("Fronthaul")
+fronthaul.link_multiplexing = True
+fronthaul.vlan_tagging = True
+fronthaul.best_effort = True
 
 # Core
 epc = rspec.RawPC("epc")
@@ -45,26 +55,44 @@ epc.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 epc.hardware_type = params.Hardware
 epc.Site('Core')
 iface = epc.addInterface()
-iface.addAddress(PG.IPv4Address("192.168.4.80", netmask))
-epclink.addInterface(iface)
+iface.addAddress(PG.IPv4Address("192.168.1.1", netmask))
+backhaul.addInterface(iface)
 
 
 
-# RAN
-ran = rspec.RawPC("ran")
-ran.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+# eNB
+enb = rspec.RawPC("enb")
+enb.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 #ran.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
-ran.hardware_type = params.Hardware
-ran.Site('RAN')
-iface = ran.addInterface()
-iface.addAddress(PG.IPv4Address("192.168.4.81", netmask))
-epclink.addInterface(iface)
+enb.hardware_type = params.Hardware
+enb.Site('eNB')
+iface1 = enb.addInterface()
+iface1.addAddress(PG.IPv4Address("192.168.1.2", netmask))
+backhaul.addInterface(iface1)
+iface2 = enb.addInterface()
+iface2.addAddress(PG.IPv4Address("192.168.2.1", netmask))
+fronthaul.addInterface(iface2)
 
 
+# Proxy
+proxy = rspec.RawPC("proxy")
+proxy.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+#ran.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
+proxy.hardware_type = params.Hardware
+proxy.Site('Proxy')
+iface = proxy.addInterface()
+iface.addAddress(PG.IPv4Address("192.168.2.2", netmask))
+fronthaul.addInterface(iface)
 
-epclink.link_multiplexing = True
-epclink.vlan_tagging = True
-epclink.best_effort = True
+# UE
+ue = rspec.RawPC("ue")
+ue.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+#ran.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
+ue.hardware_type = params.Hardware
+ue.Site('UE')
+iface = ue.addInterface()
+iface.addAddress(PG.IPv4Address("192.168.2.3", netmask))
+fronthaul.addInterface(iface)
 
 
 
