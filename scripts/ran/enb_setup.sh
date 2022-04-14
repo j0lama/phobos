@@ -5,16 +5,16 @@ cd /local/repository
 
 # Clone repository
 git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
-# Change branch
-git checkout develop
 
 cd openairinterface5g/
+# Change branch
+git checkout develop
 source oaienv
 cd cmake_targets/
 
 # Build OAI
 sudo ./build_oai -I
-sudo ./build_oai --UE --eNB
+sudo ./build_oai --eNB
 
 # eNB config
 # Backhaul

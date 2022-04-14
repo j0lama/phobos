@@ -65,7 +65,7 @@ enb = rspec.RawPC("enb")
 enb.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 #ran.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
 enb.hardware_type = params.Hardware
-enb.Site('eNB')
+enb.Site('RAN')
 iface1 = enb.addInterface()
 iface1.addAddress(PG.IPv4Address("192.168.1.2", netmask))
 backhaul.addInterface(iface1)
@@ -79,7 +79,7 @@ proxy = rspec.RawPC("proxy")
 proxy.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 #ran.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
 proxy.hardware_type = params.Hardware
-proxy.Site('Proxy')
+proxy.Site('RAN')
 iface = proxy.addInterface()
 iface.addAddress(PG.IPv4Address("192.168.2.2", netmask))
 fronthaul.addInterface(iface)
@@ -89,7 +89,7 @@ ue = rspec.RawPC("ue")
 ue.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 #ran.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
 ue.hardware_type = params.Hardware
-ue.Site('UE')
+ue.Site('RAN')
 iface = ue.addInterface()
 iface.addAddress(PG.IPv4Address("192.168.2.3", netmask))
 fronthaul.addInterface(iface)

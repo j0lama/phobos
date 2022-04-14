@@ -30,4 +30,5 @@ sudo iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
 for i in $(seq -f "%010g" 1 1500)
 do
 	/local/repository/open5gs/misc/db/open5gs-dbctl add 20893$i 00001111222233334444555566667777 88889999AAAABBBBCCCCDDDDEEEEFFFF
+	/local/repository/open5gs/misc/db/open5gs-dbctl type 20893$i 1
 done
