@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -f /local/repository/enb-setup-complete ]; then
+    echo "The eNB setup has not finished. Please wait"
+    exit 0
+fi
+
 cd /local/repository/openairinterface5g/
 source oaienv
 cd cmake_targets/
