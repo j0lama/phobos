@@ -5,7 +5,7 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-if [ -f /local/repository/proxy-setup-complete ]; then
+if [ ! -f /local/repository/proxy-setup-complete ]; then
     echo "The Proxy setup has not finished. Please wait"
     exit 0
 fi

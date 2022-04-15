@@ -51,7 +51,7 @@ fronthaul.best_effort = True
 # Core
 epc = rspec.RawPC("epc")
 epc.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-#epc.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh"))
+epc.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/core/core_setup.sh"))
 epc.hardware_type = params.Hardware
 epc.Site('Core')
 iface = epc.addInterface()

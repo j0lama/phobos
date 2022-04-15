@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f /local/repository/enb-setup-complete ]; then
+if [ ! -f /local/repository/enb-setup-complete ]; then
     echo "The eNB setup has not finished. Please wait"
     exit 0
 fi
