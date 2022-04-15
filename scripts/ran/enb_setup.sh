@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -f /local/repository/enb-setup-complete ]; then
+    echo "eNB setup already ran; not running again"
+    exit 0
+fi
+
 # Move to repository folder
 cd /local/repository
 

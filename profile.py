@@ -63,7 +63,7 @@ backhaul.addInterface(iface)
 # eNB
 enb = rspec.RawPC("enb")
 enb.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-enb.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/proxy_setup.sh"))
+enb.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/enb_setup.sh"))
 enb.hardware_type = params.Hardware
 enb.Site('RAN')
 iface1 = enb.addInterface()
