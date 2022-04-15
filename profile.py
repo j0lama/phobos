@@ -51,7 +51,7 @@ fronthaul.best_effort = True
 # Core
 epc = rspec.RawPC("epc")
 epc.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-#epc.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh")
+#epc.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/open5gs_setup.sh"))
 epc.hardware_type = params.Hardware
 epc.Site('Core')
 iface = epc.addInterface()
@@ -63,7 +63,7 @@ backhaul.addInterface(iface)
 # eNB
 enb = rspec.RawPC("enb")
 enb.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-enb.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/enb_setup.sh")
+enb.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/proxy_setup.sh"))
 enb.hardware_type = params.Hardware
 enb.Site('RAN')
 iface1 = enb.addInterface()
@@ -77,7 +77,7 @@ fronthaul.addInterface(iface2)
 # Proxy
 proxy = rspec.RawPC("proxy")
 proxy.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-proxy.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/proxy_setup.sh")
+proxy.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/proxy_setup.sh"))
 proxy.hardware_type = params.Hardware
 proxy.Site('RAN')
 iface = proxy.addInterface()
@@ -87,7 +87,7 @@ fronthaul.addInterface(iface)
 # UE
 ue = rspec.RawPC("ue")
 ue.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-ue.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/ue_setup.sh")
+ue.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/ue_setup.sh"))
 ue.hardware_type = params.Hardware
 ue.Site('RAN')
 iface = ue.addInterface()
