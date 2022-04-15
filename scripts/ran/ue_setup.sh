@@ -26,11 +26,4 @@ sudo ./build_oai --UE
 FRONTHAUL_IFACE=$(ip route list 192.168.2.3/24 | awk '{print $3}')
 sed -i "s/FRONTHAUL_IFACE/$FRONTHAUL_IFACE/g" /local/repository/config/ran/ue.conf
 
-# Configure SIMs
-cd ran_build/build
-sudo ../../../targets/bin/conf2uedata -c /local/repository/config/ran/sim.conf -o .
-sudo ../../../targets/bin/usim -g -c /local/repository/config/ran/sim.conf -o .
-sudo ../../../targets/bin/nvram -g -c /local/repository/config/ran/sim.conf -o .
-sudo cp .u* ../../../cmake_targets
-
 touch /local/repository/ue-setup-complete
