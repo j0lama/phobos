@@ -27,3 +27,5 @@ sudo ../../../targets/bin/conf2uedata -c /local/repository/config/ran/sim.conf -
 sudo ../../../targets/bin/usim -g -c /local/repository/config/ran/sim.conf -o .
 sudo ../../../targets/bin/nvram -g -c /local/repository/config/ran/sim.conf -o .
 cp .u* ../../../cmake_targets
+
+touch /local/repository/ue-setup-complete

@@ -13,3 +13,5 @@ cd oai-lte-5g-multi-ue-proxy/
 
 # Compile proxy
 make
+
+touch /local/repository/proxy-setup-complete
