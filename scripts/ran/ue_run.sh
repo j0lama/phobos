@@ -15,7 +15,7 @@ source oaienv
 cd cmake_targets/
 
 # Generate MSIN based on the ID
-printf -v MSIM "%010d" $1
+MSIN=$(printf "%010d" $1)
 
 # Configure SIMs
 cd ran_build/build
@@ -39,7 +39,7 @@ sudo ip link set veth$1 netns ue$1
 
 # Assigning IPs to the veth devices
 sudo ip addr add 1.1.$1.1/24 dev veth_gw_$1 # Gateway interface
-sudo ip netns exec ue$1 ip addr add 1.1.$1.2 dev veth$1 # Namespace interface
+sudo ip netns exec ue$1 ip addr add 1.1.$1.2/24 dev veth$1 # Namespace interface
 
 # Bring interfaces up
 sudo ip link set veth_gw_$1 up
@@ -48,13 +48,13 @@ sudo ip netns exec ue$1 ip link set veth$1 up
 # Enable IPv4 packet forwarding
 sudo sysctl -w net.ipv4.ip_forward=1
 
-BACKHAUL_IFACE=$(ip route list 192.168.2.3/24 | awk '{print $3}') # Get backhaul network interface
+FRONTHAUL_IFACE=$(ip route list 192.168.2.3/24 | awk '{print $3}') # Get fronthaul network interface
 # Add packet forwaring rules
-sudo iptables -A FORWARD -o $BACKHAUL_IFACE -i veth_gw_$1 -j ACCEPT -d 192.168.2.1/24
-sudo iptables -A FORWARD -I $BACKHAUL_IFACE -o veth_gw_$1 -j ACCEPT -s 192.168.2.1/24
+sudo iptables -A FORWARD -o $FRONTHAUL_IFACE -i veth_gw_$1 -j ACCEPT -d 192.168.2.1/24
+sudo iptables -A FORWARD -i $FRONTHAUL_IFACE -o veth_gw_$1 -j ACCEPT -s 192.168.2.1/24
 
 # Create a NAT for the namespace
-sudo iptables -t nat -A POSTROUTING -s 1.1.$1.2/24 -o $BACKHAUL_IFACE -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -s 1.1.$1.2/24 -o $FRONTHAUL_IFACE -j MASQUERADE
 
 # Add default gateway to the namespace
 sudo ip netns exec ue$1 ip route add default via 1.1.$1.1
