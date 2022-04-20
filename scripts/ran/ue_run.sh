@@ -10,20 +10,17 @@ if [ ! -f /local/repository/ue-setup-complete ]; then
     exit 0
 fi
 
-# Generate MSIN based on the ID
-MSIN=$(printf "%010d" $1)
-export MSIN
-
 cd /local/repository/openairinterface5g/
 source oaienv
 cd cmake_targets/
 
-
+# Generate MSIN based on the ID
+MSIN=$(printf "%010d" $1)
 
 # Configure SIMs
 cd ran_build/build
 cp /local/repository/config/ran/sim.conf /local/repository/config/ran/tmp_sim.conf # Create a copy of the configuration file
-sed -i "s/CUSTOM_MSIN/$MSIM/g" /local/repository/config/ran/tmp_sim.conf # Add the MSIN
+sed -i "s/CUSTOM_MSIN/$MSIN/g" /local/repository/config/ran/tmp_sim.conf # Add the MSIN
 sudo ../../../targets/bin/conf2uedata -c /local/repository/config/ran/tmp_sim.conf -o . # Compile 
 sudo ../../../targets/bin/usim -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
 sudo ../../../targets/bin/nvram -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
