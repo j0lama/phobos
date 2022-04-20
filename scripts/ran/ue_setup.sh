@@ -21,4 +21,7 @@ cd cmake_targets/
 sudo ./build_oai -I
 sudo ./build_oai --UE
 
+FRONTHAUL_IFACE=$(ip route list 192.168.2.3/24 | awk '{print $3}') # Get fronthaul network interface
+sed -i "s/FRONTHAUL_IFACE/$FRONTHAUL_IFACE/g" /local/repository/config/ran/ue.conf
+
 touch /local/repository/ue-setup-complete
