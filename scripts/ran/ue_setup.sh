@@ -9,11 +9,9 @@ fi
 cd /local/repository
 
 # Clone repository
-git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
+git clone https://github.com/j0lama/openairinterface5g.git
 
 cd openairinterface5g/
-# Change branch
-git checkout develop
 source oaienv
 cd cmake_targets/
 
