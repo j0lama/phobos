@@ -22,10 +22,7 @@ cd ran_build/build
 cp /local/repository/config/ran/sim.conf /local/repository/config/ran/tmp_sim.conf # Create a copy of the configuration file
 sed -i "s/CUSTOM_MSIN/$MSIN/g" /local/repository/config/ran/tmp_sim.conf # Add the MSIN
 sudo ../../../targets/bin/conf2uedata -c /local/repository/config/ran/tmp_sim.conf -o . # Compile 
-sudo ../../../targets/bin/usim -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
-sudo ../../../targets/bin/nvram -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
 rm /local/repository/config/ran/tmp_sim.conf # Remove SIM config file copy
-
 
 ####### Network isolation #######
 # Create namespace

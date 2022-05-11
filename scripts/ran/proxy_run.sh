@@ -12,4 +12,5 @@ fi
 
 cd /local/repository/oai-lte-5g-multi-ue-proxy/
 
+# proxy <num ues> <enb ip> <proxy ip> <ue ip>
 sudo -E ./build/proxy $1 192.168.2.1 192.168.2.2 192.168.2.3
