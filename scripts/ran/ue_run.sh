@@ -10,21 +10,7 @@ if [ ! -f /local/repository/ue-setup-complete ]; then
     exit 0
 fi
 
-cd /local/repository/openairinterface5g/
-source oaienv
-cd cmake_targets/
-
-# Generate MSIN based on the ID
-MSIN=$(printf "%010d" $1)
-
-# Configure SIMs
-cd ran_build/build
-cp /local/repository/config/ran/sim.conf /local/repository/config/ran/tmp_sim.conf # Create a copy of the configuration file
-sed -i "s/CUSTOM_MSIN/$MSIN/g" /local/repository/config/ran/tmp_sim.conf # Add the MSIN
-sudo ../../../targets/bin/conf2uedata -c /local/repository/config/ran/tmp_sim.conf -o . # Compile 
-sudo ../../../targets/bin/usim -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
-sudo ../../../targets/bin/nvram -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
-rm /local/repository/config/ran/tmp_sim.conf # Remove SIM config file copy
+cd /local/repository/openairinterface5g/cmake_targets/
 
 ####### Network isolation #######
 # Create namespace
@@ -60,8 +46,10 @@ sudo ip netns exec ue$1 ip route add default via 1.1.$1.1
 
 
 # Configure UE configuration file (IP and iface name)
-cp /local/repository/config/ran/ue.conf /local/repository/config/ran/tmp_ue.conf
-sed -i "s/FRONTHAUL_IFACE/veth$1/g" /local/repository/config/ran/tmp_ue.conf
-sed -i "s/VETH_IP/1.1.$1.2/g" /local/repository/config/ran/tmp_ue.conf
+cp /local/repository/config/ran/ue.conf /local/repository/config/ran/ue_$1.conf
+sed -i "s/FRONTHAUL_IFACE/veth$1/g" /local/repository/config/ran/ue_$1.conf
+sed -i "s/VETH_IP/1.1.$1.2/g" /local/repository/config/ran/ue_$1.conf
 
-sudo -E ./lte-uesoftmodem -O /local/repository/config/ran/tmp_ue.conf --L2-emul 5 --nokrnmod 1 --ue-idx-standalone 0 --num-ues 1 --node-number 2 --log_config.global_log_options level,nocolor,time,thread_id | tee /local/repository/ue.log 2>&1
+# Run UE inside namespace
+cp /local/repository/scripts/ran/ue_ns.sh /local/repository/openairinterface5g/cmake_targets/
+sudo ip netns exec ue$1 ./run_phobos_ue $1
