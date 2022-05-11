@@ -26,7 +26,6 @@ sudo ../../../targets/bin/usim -g -c /local/repository/config/ran/tmp_sim.conf -
 sudo ../../../targets/bin/nvram -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
 rm /local/repository/config/ran/tmp_sim.conf # Remove SIM config file copy
 
-
 ####### Network isolation #######
 # Create namespace
 sudo ip netns add ue$1
@@ -65,6 +64,5 @@ sudo ip netns exec ue$1 ip route add default via 1.1.$1.1
 cp /local/repository/config/ran/ue.conf /local/repository/config/ran/tmp_ue.conf
 sed -i "s/FRONTHAUL_IFACE/veth$1/g" /local/repository/config/ran/tmp_ue.conf
 sed -i "s/VETH_IP/1.1.$1.2/g" /local/repository/config/ran/tmp_ue.conf
-
 
 sudo -E ./lte-uesoftmodem -O /local/repository/config/ran/tmp_ue.conf --L2-emul 5 --nokrnmod 1 --ue-idx-standalone 0 --num-ues 1 --node-number 2 --log_config.global_log_options level,nocolor,time,thread_id | tee /local/repository/ue.log 2>&1
