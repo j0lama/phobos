@@ -42,7 +42,6 @@ sudo ip netns exec ue$1 ip addr add 1.1.$1.2/24 dev veth$1 # Namespace interface
 
 # Bring interfaces up
 sudo ip link set veth_gw_$1 up
-sudo ip netns exec ue$1 ip link set dev lo up
 sudo ip netns exec ue$1 ip link set veth$1 up
 
 # Enable IPv4 packet forwarding
