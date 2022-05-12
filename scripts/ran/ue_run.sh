@@ -52,4 +52,4 @@ sed -i "s/VETH_IP/1.1.$1.2/g" /local/repository/config/ran/ue_$1.conf
 
 # Run UE inside namespace
 cp /local/repository/scripts/ran/ue_ns.sh /local/repository/openairinterface5g/cmake_targets/
-sudo ip netns exec ue$1 ./run_phobos_ue $1
+sudo ip netns exec ue$1 ./ue_ns.sh $1

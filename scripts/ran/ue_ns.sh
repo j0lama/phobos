@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$#" -ne 1 ]; then
-    echo "USE: sudo ./run_phobos_ue.sh <UE MSIN>"
+    echo "USE: ./ue_ns.sh <UE MSIN>"
     exit 1
 fi
 
@@ -13,11 +13,11 @@ cd cmake_targets/ran_build/build/
 MSIN=$(printf "%010d" $1)
 
 # Configure SIM card
-cp /local/repository/config/ran/sim.conf /local/repository/config/ran/sim.conf # Create a copy of the configuration file
+cp /local/repository/config/ran/sim.conf /local/repository/config/ran/tmp_sim.conf # Create a copy of the configuration file
 sed -i "s/CUSTOM_MSIN/$MSIN/g" /local/repository/config/ran/tmp_sim.conf # Add the MSIN
-sudo ../../../targets/bin/conf2uedata -c /local/repository/config/ran/tmp_sim.conf -o . # Compile 
-sudo ../../../targets/bin/usim -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
-sudo ../../../targets/bin/nvram -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
+../../../targets/bin/conf2uedata -c /local/repository/config/ran/tmp_sim.conf -o . # Compile 
+../../../targets/bin/usim -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
+../../../targets/bin/nvram -g -c /local/repository/config/ran/tmp_sim.conf -o . # Compile
 rm /local/repository/config/ran/tmp_sim.conf # Remove SIM config file copy
 
 num="$(($1-1))"
