@@ -79,7 +79,7 @@ fronthaul.addInterface(iface2)
 # Proxy
 proxy = rspec.RawPC("proxy")
 proxy.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-proxy.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/proxy_setup.sh"))
+proxy.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/proxy_setup.sh " + params.token))
 proxy.hardware_type = params.Hardware
 proxy.Site('RAN')
 iface = proxy.addInterface()
