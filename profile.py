@@ -89,7 +89,7 @@ fronthaul.addInterface(iface)
 # UE
 ue = rspec.RawPC("ue")
 ue.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-ue.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/ue_setup.sh"))
+ue.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/ran/ue_setup.sh " + params.token))
 ue.hardware_type = params.Hardware
 ue.Site('RAN')
 iface = ue.addInterface()
