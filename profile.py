@@ -16,8 +16,10 @@ rspec = PG.Request()
 
 
 # Profile parameters.
-pc.defineParameter("Hardware", "EPC hardware",
+pc.defineParameter("Hardware", "Node Hardware",
                    portal.ParameterType.STRING,"d430",[("d430","d430"),("d710","d710"), ("d820", "d820"), ("pc3000", "pc3000")])
+pc.defineParameter("token", "GitHub Token",
+                   portal.ParameterType.STRING, "")
 
 params = pc.bindParameters()
 

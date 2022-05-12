@@ -10,6 +10,6 @@ if [ ! -f /local/repository/proxy-setup-complete ]; then
     exit 0
 fi
 
-cd /local/repository/oai-lte-5g-multi-ue-proxy/
+cd /local/repository/proxy/
 
-sudo -E ./build/proxy $1 192.168.2.1 192.168.2.2 192.168.2.3
+sudo -E ./proxy $1 192.168.2.1 192.168.2.2
