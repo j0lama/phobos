@@ -18,6 +18,8 @@ rspec = PG.Request()
 # Profile parameters.
 pc.defineParameter("Hardware", "Node Hardware",
                    portal.ParameterType.STRING,"d430",[("d430","d430"),("d710","d710"), ("d820", "d820"), ("pc3000", "pc3000")])
+pc.defineParameter("Core", "Core Implementation",
+                   portal.ParameterType.STRING,"Open5GS",[("Open5GS","Open5GS"),("srsEPC","srsEPC")])
 pc.defineParameter("token", "GitHub Token",
                    portal.ParameterType.STRING, "")
 
@@ -53,7 +55,10 @@ fronthaul.best_effort = True
 # Core
 epc = rspec.RawPC("epc")
 epc.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-epc.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/core/core_setup.sh"))
+if params.Core == 'Open5GS':
+    epc.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/core/open5gs_setup.sh"))
+elif params.Core == 'srsEPC':
+    epc.addService(PG.Execute(shell="sh", command="/usr/bin/sudo /local/repository/scripts/core/srsepc_setup.sh"))
 epc.hardware_type = params.Hardware
 epc.Site('Core')
 iface = epc.addInterface()

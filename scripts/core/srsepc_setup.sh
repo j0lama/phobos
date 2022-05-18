@@ -17,4 +17,5 @@ sudo apt-get install srsran -y
 # Configure the network
 sudo srsepc_if_masq.sh eno1
 
-touch /local/repository/core-setup-complete
+touch /local/repository/core-ready
+touch /local/repository/srsepc-setup-complete
